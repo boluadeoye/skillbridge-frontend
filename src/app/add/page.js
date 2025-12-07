@@ -14,20 +14,25 @@ export default function AddSkill() {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    category: "Development",
-    user_id: 1, // Integer
-    status: "active" // Common required field
+    category: "development", // CHANGED: Lowercase to match Xano Enum
+    user_id: 1 // Integer
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
+    // Prepare payload: Send both 'user_id' and 'user' to be safe
+    const payload = {
+      ...formData,
+      user: 1, // Fallback in case Xano expects 'user' instead of 'user_id'
+    };
+
     try {
       const res = await fetch(`${API_URL}/skill`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
       const data = await res.json();
@@ -36,8 +41,8 @@ export default function AddSkill() {
         setSuccess(true);
         setTimeout(() => router.push("/"), 1500);
       } else {
-        // DEBUG: Show the exact error from Xano on the phone screen
-        alert(`Failed: ${JSON.stringify(data)}`);
+        // Show the error details
+        alert(`Xano Error: ${JSON.stringify(data)}`);
         setLoading(false);
       }
     } catch (error) {
@@ -98,10 +103,10 @@ export default function AddSkill() {
                 value={formData.category}
                 onChange={(e) => setFormData({...formData, category: e.target.value})}
               >
-                <option>Development</option>
-                <option>Design</option>
-                <option>Marketing</option>
-                <option>Writing</option>
+                <option value="development">Development</option>
+                <option value="design">Design</option>
+                <option value="marketing">Marketing</option>
+                <option value="writing">Writing</option>
               </select>
             </div>
 
