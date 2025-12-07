@@ -78,7 +78,7 @@ export default function Home() {
           <div className="text-center py-24 border border-dashed border-slate-800 rounded-3xl bg-slate-900/30">
             <Zap size={48} className="mx-auto text-slate-700 mb-4" />
             <p className="text-slate-400 text-lg mb-6">The marketplace is empty.</p>
-            <button className="px-8 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full font-bold transition-all">
+            <Link href="/add" className="px-8 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full font-bold transition-all inline-block">
               Be the First Provider
             </button>
           </div>
