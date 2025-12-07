@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Search, ArrowRight, Zap, User, ShieldCheck } from "lucide-react";
+import Link from "next/link";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -80,7 +81,7 @@ export default function Home() {
             <p className="text-slate-400 text-lg mb-6">The marketplace is empty.</p>
             <Link href="/add" className="px-8 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full font-bold transition-all inline-block">
               Be the First Provider
-            </button>
+            </Link>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
