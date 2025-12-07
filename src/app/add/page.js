@@ -14,18 +14,22 @@ export default function AddSkill() {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    category: "development", // CHANGED: Lowercase to match Xano Enum
-    user_id: 1 // Integer
+    category: "development", 
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    // Prepare payload: Send both 'user_id' and 'user' to be safe
+    // THE SHOTGUN PAYLOAD: Send ID in every possible format
+    // This ensures Xano finds the one it's looking for.
     const payload = {
       ...formData,
-      user: 1, // Fallback in case Xano expects 'user' instead of 'user_id'
+      user_id: 1,      // Standard
+      users_id: 1,     // Xano default plural
+      user: 1,         // Table reference name
+      requester_id: 1, // From your previous logic
+      status: "active" // Just in case
     };
 
     try {
@@ -41,7 +45,6 @@ export default function AddSkill() {
         setSuccess(true);
         setTimeout(() => router.push("/"), 1500);
       } else {
-        // Show the error details
         alert(`Xano Error: ${JSON.stringify(data)}`);
         setLoading(false);
       }
